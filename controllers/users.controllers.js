@@ -31,7 +31,7 @@ module.exports.getUser = async (req, res, next) => {
 module.exports.createUser = async (req, res, next) => {
   try {
     const user = User.create({ ...req.body });
-    res.status(CREATED_CODE).send({ data: user });
+    res.status(CREATED_CODE).send({ data: { ...user, _id: user._id } });
   } catch (err) {
     if (err instanceof MongooseError) {
       next(new BadRequestError(err.message));
