@@ -8,7 +8,7 @@ const ForbiddenError = require('../utils/errors/ForbiddenError');
 
 module.exports.createCard = async (req, res, next) => {
   try {
-    const card = await Card.create({ ...req.body, owner: req.user.id });
+    const card = await Card.create({ ...req.body, owner: req.user._id });
     res.status(CREATED_CODE).send({ data: card });
   } catch (err) {
     if (err instanceof ValidationError) {
@@ -67,5 +67,9 @@ async function changeLikeState(action, req, res, next) {
   }
 }
 
-module.exports.likeCard = (req, res, next) => changeLikeState('$addToSet', req, res, next);
-module.exports.dislikeCard = (req, res, next) => changeLikeState('$pull', req, res, next);
+module.exports.likeCard = function (req, res, next) {
+  return changeLikeState('$addToSet', req, res, next);
+};
+module.exports.dislikeCard = function (req, res, next) {
+  return changeLikeState('$pull', req, res, next);
+};
