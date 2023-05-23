@@ -1,10 +1,9 @@
 const CastError = require('mongoose/lib/error/cast');
 const ValidationError = require('mongoose/lib/error/validation');
 const Card = require('../models/card');
-const { CARD_NOT_FOUND, CREATED_CODE, NO_RIGHTS } = require('../utils/constants');
+const { CARD_NOT_FOUND, CREATED_CODE } = require('../utils/constants');
 const BadRequestError = require('../utils/errors/BadRequestError');
 const NotFoundError = require('../utils/errors/NotFoundError');
-const ForbiddenError = require('../utils/errors/ForbiddenError');
 
 module.exports.createCard = async (req, res, next) => {
   try {
@@ -36,8 +35,7 @@ module.exports.deleteCard = async (req, res, next) => {
   try {
     const card = await Card.findById(req.params.cardId);
     if (!card) throw new NotFoundError();
-    if (card.owner.id !== req.user._id) throw new ForbiddenError(NO_RIGHTS);
-    await card.deleteOne();
+    await card.delete();
     res.send({ data: card });
   } catch (err) {
     if (err instanceof CastError) {
