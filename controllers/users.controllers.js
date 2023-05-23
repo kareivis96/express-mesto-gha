@@ -31,8 +31,8 @@ module.exports.getUser = async (req, res, next) => {
 
 module.exports.createUser = async (req, res, next) => {
   try {
-    const user = User.create({ ...req.body });
-    res.status(CREATED_CODE).send({ data: { ...user, _id: user._id } });
+    const user = await User.create({ ...req.body });
+    res.status(CREATED_CODE).send({ data: user });
   } catch (err) {
     if (err instanceof ValidationError) {
       next(new BadRequestError(err.message));
