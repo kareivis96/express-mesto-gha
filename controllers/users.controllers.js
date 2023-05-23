@@ -3,8 +3,8 @@ const ValidationError = require('mongoose/lib/error/validation');
 const MongooseError = require('mongoose/lib/error/mongooseError');
 const User = require('../models/user');
 const { USER_NOT_FOUND, CREATED_CODE } = require('../utils/constants');
-const { BadRequestError } = require('../utils/errors/BadRequestError');
-const { NotFoundError } = require('../utils/errors/NotFoundError');
+const BadRequestError = require('../utils/errors/BadRequestError');
+const NotFoundError = require('../utils/errors/NotFoundError');
 
 module.exports.getUsers = async (req, res, next) => {
   try {

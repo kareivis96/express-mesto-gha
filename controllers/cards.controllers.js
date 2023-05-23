@@ -2,9 +2,9 @@ const CastError = require('mongoose/lib/error/cast');
 const ValidationError = require('mongoose/lib/error/validation');
 const Card = require('../models/card');
 const { CARD_NOT_FOUND, CREATED_CODE, NO_RIGHTS } = require('../utils/constants');
-const { BadRequestError } = require('../utils/errors/BadRequestError');
-const { NotFoundError } = require('../utils/errors/NotFoundError');
-const { ForbiddenError } = require('../utils/errors/ForbiddenError');
+const BadRequestError = require('../utils/errors/BadRequestError');
+const NotFoundError = require('../utils/errors/NotFoundError');
+const ForbiddenError = require('../utils/errors/ForbiddenError');
 
 module.exports.createCard = async (req, res, next) => {
   try {
