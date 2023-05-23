@@ -34,7 +34,7 @@ module.exports.getCards = async (req, res, next) => {
 
 module.exports.deleteCard = async (req, res, next) => {
   try {
-    const card = await Card.findById(req.params.id);
+    const card = await Card.findById(req.params.cardId);
     if (!card) throw new NotFoundError();
     if (card.owner.id !== req.user._id) throw new ForbiddenError(NO_RIGHTS);
     await card.deleteOne();

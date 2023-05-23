@@ -8,3 +8,4 @@ module.exports.INTERNAL_ERROR = 'Something went wrong';
 module.exports.USER_NOT_FOUND = 'User not found';
 module.exports.CARD_NOT_FOUND = 'Card not found';
 module.exports.NO_RIGHTS = 'You have no rights';
+module.exports.PAGE_NOT_FOUND = "Endpoint doesn't exists";
