@@ -35,7 +35,7 @@ module.exports.deleteCard = async (req, res, next) => {
   try {
     const card = await Card.findById(req.params.cardId);
     if (!card) throw new NotFoundError();
-    await card.delete();
+    await Card.findByIdAndRemove(req.params.cardId);
     res.send({ data: card });
   } catch (err) {
     if (err instanceof CastError) {
