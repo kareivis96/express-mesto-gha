@@ -1,4 +1,5 @@
 const CastError = require('mongoose/lib/error/cast');
+const ValidationError = require('mongoose/lib/error/validation');
 const MongooseError = require('mongoose/lib/error/mongooseError');
 const User = require('../models/user');
 const { USER_NOT_FOUND, CREATED_CODE } = require('../utils/constants');
@@ -33,7 +34,7 @@ module.exports.createUser = async (req, res, next) => {
     const user = User.create({ ...req.body });
     res.status(CREATED_CODE).send({ data: { ...user, _id: user._id } });
   } catch (err) {
-    if (err instanceof MongooseError) {
+    if (err instanceof ValidationError) {
       next(new BadRequestError(err.message));
     } else {
       next(err);
