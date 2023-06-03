@@ -14,4 +14,6 @@ module.exports.CARD_NOT_FOUND = 'Card not found';
 module.exports.PAGE_NOT_FOUND = "Endpoint doesn't exists";
 module.exports.NO_TOKEN = 'No token';
 module.exports.BAD_TOKEN = 'Bad token';
+module.exports.NO_RIGHTS = 'No rights';
+
 module.exports.JWT_KEY = 'wer4wer32rweWDw421rq33';
