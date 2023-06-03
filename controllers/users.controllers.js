@@ -17,7 +17,7 @@ module.exports.getUsers = async (req, res, next) => {
 module.exports.getMe = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
-    if (!user) throw new NotFoundError(USER_NOT_FOUND);
+    if (user === null) throw new NotFoundError(USER_NOT_FOUND);
     res.send(user);
   } catch (err) {
     next(err);
