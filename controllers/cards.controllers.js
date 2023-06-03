@@ -7,7 +7,7 @@ const NotFoundError = require('../utils/errors/NotFoundError');
 
 module.exports.createCard = async (req, res, next) => {
   try {
-    let card = await Card.create({ ...req.body, owner: req.user._id });
+    let card = await Card.create({ ...req.body, owner: req.user.id });
     await card.save();
     card = await card.populate('owner likes');
     res.status(CREATED_CODE).send({ data: card });
