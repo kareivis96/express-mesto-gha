@@ -13,6 +13,7 @@ module.exports.auth = (req, res, next) => {
     const payload = jwt.verify(token, JWT_KEY);
 
     req.user = payload;
+    next();
   } catch (err) {
     if (err instanceof jwt.JsonWebTokenError) {
       next(new UnauthorizedError(BAD_TOKEN));
