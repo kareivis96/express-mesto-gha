@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Бэкэнд для приложения Mesto",
   "main": "app.js",
-  "type": "module",
   "scripts": {
     "lint": "npx eslint . --fix",
     "start": "node app.js",
