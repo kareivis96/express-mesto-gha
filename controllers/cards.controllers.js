@@ -43,7 +43,7 @@ module.exports.deleteCard = async (req, res, next) => {
     res.send({ data: card });
   } catch (err) {
     if (err instanceof CastError) {
-      next(new BadRequestError(err.message));
+      next(new BadRequestError(req.user._id));
     } else {
       next(err);
     }
