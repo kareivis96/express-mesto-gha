@@ -12,7 +12,7 @@ module.exports.auth = (req, res, next) => {
     const token = authorization.replace('Bearer ', '');
     const payload = jwt.verify(token, JWT_KEY);
 
-    req.user._id = payload;
+    req.user = payload;
     next();
   } catch (err) {
     if (err instanceof jwt.JsonWebTokenError) {
