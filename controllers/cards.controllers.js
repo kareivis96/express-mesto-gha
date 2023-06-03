@@ -7,7 +7,9 @@ const NotFoundError = require('../utils/errors/NotFoundError');
 
 module.exports.createCard = async (req, res, next) => {
   try {
-    const card = await Card.create({ ...req.body, owner: req.user._id });
+    let card = await Card.create({ ...req.body, owner: req.user._id });
+    await card.save();
+    card = await card.populate('owner likes');
     res.status(CREATED_CODE).send({ data: card });
   } catch (err) {
     if (err instanceof ValidationError) {
@@ -20,7 +22,7 @@ module.exports.createCard = async (req, res, next) => {
 
 module.exports.getCards = async (req, res, next) => {
   try {
-    const cards = await Card.find({});
+    const cards = await Card.find({}).populate('owner likes');
     res.send({ data: cards });
   } catch (err) {
     if (err instanceof ValidationError) {
@@ -33,7 +35,7 @@ module.exports.getCards = async (req, res, next) => {
 
 module.exports.deleteCard = async (req, res, next) => {
   try {
-    const card = await Card.findById(req.params.cardId);
+    const card = await Card.findById(req.params.cardId).populate('owner likes');
     if (!card) throw new NotFoundError();
     await Card.findByIdAndRemove(req.params.cardId);
     res.send({ data: card });
@@ -53,7 +55,7 @@ async function changeLikeState(action, req, res, next) {
     }, {
       new: true,
       runValidators: true,
-    });
+    }).populate('owner likes');
     if (!card) throw new NotFoundError(CARD_NOT_FOUND);
     res.send(card);
   } catch (err) {
