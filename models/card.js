@@ -31,6 +31,9 @@ const cardSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+}, {
+  timestamps: true,
+  versionKey: false,
 });
 
 module.exports = mongoose.model('card', cardSchema);
