@@ -17,7 +17,9 @@ module.exports.signup = async (req, res, next) => {
     if (checkUser) throw new ConflictError(USER_EXISTS);
 
     const user = await User.create({ ...req.body, email, password });
-    res.status(CREATED_CODE).send({ data: user });
+    const response = { ...user };
+    delete response.password;
+    res.status(CREATED_CODE).send({ data: response });
   } catch (err) {
     next(err);
   }
