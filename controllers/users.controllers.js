@@ -1,8 +1,7 @@
 const CastError = require('mongoose/lib/error/cast');
-const ValidationError = require('mongoose/lib/error/validation');
 const MongooseError = require('mongoose/lib/error/mongooseError');
 const User = require('../models/user');
-const { USER_NOT_FOUND, CREATED_CODE } = require('../utils/constants');
+const { USER_NOT_FOUND } = require('../utils/constants');
 const BadRequestError = require('../utils/errors/BadRequestError');
 const NotFoundError = require('../utils/errors/NotFoundError');
 
@@ -15,6 +14,16 @@ module.exports.getUsers = async (req, res, next) => {
   }
 };
 
+module.exports.getMe = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) throw new NotFoundError(USER_NOT_FOUND);
+    res.send(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports.getUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
@@ -22,19 +31,6 @@ module.exports.getUser = async (req, res, next) => {
     res.send({ data: user });
   } catch (err) {
     if (err instanceof CastError) {
-      next(new BadRequestError(err.message));
-    } else {
-      next(err);
-    }
-  }
-};
-
-module.exports.createUser = async (req, res, next) => {
-  try {
-    const user = await User.create({ ...req.body });
-    res.status(CREATED_CODE).send({ data: user });
-  } catch (err) {
-    if (err instanceof ValidationError) {
       next(new BadRequestError(err.message));
     } else {
       next(err);
