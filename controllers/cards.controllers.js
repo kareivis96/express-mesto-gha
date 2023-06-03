@@ -8,7 +8,9 @@ const ForbiddenError = require('../utils/errors/ForbiddenError');
 
 module.exports.createCard = async (req, res, next) => {
   try {
-    const card = await Card.create({ ...req.body, owner: req.user._id }).populate('owner likes');
+    let card = new Card({ ...req.body, owner: req.user._id });
+    await card.save();
+    card = await card.populate('owner likes');
     res.status(CREATED_CODE).send({ data: card });
   } catch (err) {
     if (err instanceof ValidationError) {
