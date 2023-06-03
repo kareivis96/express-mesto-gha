@@ -7,7 +7,7 @@ module.exports.auth = (req, res, next) => {
     const { authorization } = req.headers;
 
     if (!authorization) throw new UnauthorizedError(NO_TOKEN);
-    if (!(/^Bearer\s/.test(authorization))) throw new UnauthorizedError(BAD_TOKEN);
+    if (!authorization.match(/^Bearer\s/)) throw new UnauthorizedError(BAD_TOKEN);
 
     const token = authorization.replace('Bearer ', '');
     const payload = jwt.verify(token, JWT_KEY);
